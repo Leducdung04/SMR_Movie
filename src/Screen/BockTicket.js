@@ -214,90 +214,6 @@ const AmThanhThanhCong = async () => {
               Alert.alert("Lỗi", error.message);
           }
     }
-
-    
-      // try {
-      //     console.log("Bắt đầu gửi yêu cầu");
-  
-      //     if (ImgQR === null) {
-      //       Alert.alert("Vui lòng chọn ảnh");
-      //       return false;
-      //   }
-      //   if (!ImgQR || !ImgQR.uri) {
-      //       throw new Error("Ảnh QR không hợp lệ");
-      //   }
-    
-      //   console.log("Ảnh QR hợp lệ");
-    
-        
-      //   if (!uri || !fileName) {
-      //       throw new Error("URI hoặc tên tệp của ảnh không hợp lệ");
-      //   }
-    
-      //   const formData = new FormData();
-      //   // formData.append("img",{
-      //   //     uri,
-      //   //     name: fileName,
-      //   //     type: type || 'image/jpeg',
-      //   // });
-    
-      //   formData.append("payment_amount", TotalPrice);
-      //   formData.append("Number_of_tickets", Chair_select.length);
-      //   formData.append("Payment_methods", payMethod);
-    
-      //   const date = new Date();
-      //   const day = date.getDate();
-      //   const month = date.getMonth() + 1;
-      //   const year = date.getFullYear();
-      //   const hours = date.getHours().toString().padStart(2, '0');
-      //   const minutes = date.getMinutes().toString().padStart(2, '0');
-    
-      //   formData.append("date", `${day}/${month}/${year}`);
-      //   formData.append("time", `${hours}:${minutes}`);
-      //   formData.append("id_uer", '663b1b0095121af8cf26fe17');
-      //   formData.append("status", 0);
-    
-      //   console.log("Chuẩn bị gửi yêu cầu tới server");
-    
-      //   const response = await fetch(Uri_Add_Bills, {
-      //       method: "POST",
-      //       headers: {
-      //           "Content-Type": "multipart/form-data"
-      //       },
-      //       body:formData
-      //   });
-    
-      //   console.log("Yêu cầu đã được gửi");
-    
-      //   if (!response.ok) {
-      //       const errorText = await response.text();
-      //       console.log("Phản hồi lỗi từ server:",errorText);
-      //       throw new Error(`Network response was not ok: ${errorText}`);
-      //   }
-    
-      //   const responseData = await response.json();
-      //   console.log("Response:", responseData);
-    
-      //   addTicket();
-      //   setcomfirmBookingByPay(false);
-      //   setCheckSuccess(true);
-      //   AmThanhThanhCong();
-      //   await setTimeout(() => {
-      //       setCheckSuccess(false);
-      //   }, 1500);
-      //   await Check_chair_status();
-      //   await setChair_select([]);
-      //   setTimeout(() => {
-      //       Alert.alert("Cảm ơn bạn đã lựa chọn SMR! Thông tin vé của bạn đã được gửi đến hòm thư. Vui lòng kiểm tra lại các thông tin chi tiết. Nếu có bất kỳ thắc mắc hoặc cần hỗ trợ vui lòng liên hệ với chúng tôi qua email. Chúc bạn có một buổi xem phim vui vẻ và thú vị!");
-      //   }, 2000);
-      // } catch (error) {
-      //     console.log("Lỗi khi orderTicketByPay", error);
-      //     if (error.message === "Network Error") {
-      //         Alert.alert("Lỗi mạng", "Không thể kết nối đến server. Vui lòng kiểm tra lại kết nối mạng và thử lại.");
-      //     } else {
-      //         Alert.alert("Lỗi", error.message);
-      //     }
-      // }
   };
   
 
@@ -411,8 +327,8 @@ const AmThanhThanhCong = async () => {
               position: "absolute",
               color: "white",
               fontWeight: "bold",
-              fontSize: 18,
-              width: 40,
+              fontSize: 16,
+              width: 30,
               textAlign: "center",
             }}
           >
@@ -426,114 +342,163 @@ const AmThanhThanhCong = async () => {
   return (
     <View style={{flex:1,backgroundColor:'white'}}>
 
-    
-    <View>
-      <ImageBackground
-        style={{ height: 120, width: "100%" }}
-        source={require("../img/image.png")}
-      >
-        <View
-          style={{
-            marginStart: 20,
-            marginTop: 45,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity
-            style={{ width: 50 }}
-            onPress={() => navigation.goBack()}
+         {/* headers  */}
+         <View style={{flex:1}}>
+         <ImageBackground
+            style={{ height: '100%', width: "100%" }}
+            source={require("../img/image.png")}
           >
-            <Ionicons name="arrow-back-circle" size={45} color="white" />
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-      <Text style={{ fontSize: 18, textAlign: "center", marginVertical: 10 }}>
-        Vui lòng chọn ghế{" "}
-      </Text>
-      <FlatList
-        data={ListGhe}
-        renderItem={({ item }) => <ItemGhe item={item} />}
-        numColumns={10}
-        keyExtractor={(item, index) => index.toString()}
-      />
-      <Text style={{ margin: 10, fontSize: 17, color: 'gray' }}>Trạng thái ghế</Text>
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ width:widthScreen/10*3, marginStart: 10 }}>
-          <View style={{ flexDirection: "row", alignItems: 'center', margin: 5 }}>
-            <AntDesign name="QQ" size={40} color='#DDDDDD' />
-            <Text>Ghế trống</Text>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: 'center', margin: 5 }}>
-            <AntDesign name="QQ" size={40} color="#94d0ee" />
-            <Text>Đang chọn</Text>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: 'center', margin: 5 }}>
-            <AntDesign name="QQ" size={40} color="red" />
-            <Text>Đã đặt</Text>
-          </View>
-        </View>
-        <View style={{flex:1,width:widthScreen/10*7}}>
-        <FlatList
-           style={{flex:1,backgroundColor:'#EEEEEE',borderRadius:5}}
-           data={Chair_select}
-           numColumns={3}
-           renderItem={({item})=>(<ImageBackground style={{width:widthScreen/10*2,height:40,margin:6,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}
-                                source={require('../img/Ticket.png')}
-           >
-            <Text style={{color:'black',fontSize:16,textAlign:'center',fontWeight:'bold'}}>{item}</Text>
-            <Image source={require('../img/Ma.png')}
-                   style={{width:10,height:40}}
-            />
-           </ImageBackground>)}
-          />
-        </View>
-        
-      </View>
-      <Text style={{ margin: 10, fontSize: 17, color: 'gray' }}>Phương thức thanh toán</Text>
-      <View style={{flex:2}}>
-          
-          <TouchableOpacity 
-          onPress={()=>{setpayMethod(1)}}
-          style={{height:57,marginHorizontal:20,marginBottom:15,borderWidth:payMethod===1?1:0,borderRadius:10,borderColor:'green'}}>
-             <View  style={styles.pay}>
-                <Text style={styles.textPay}>Thanh toán tại quầy</Text>
-                <FontAwesome5 name="money-bill" size={24} color="green" />
-             </View>
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-           onPress={()=>{
+            <View
+              style={{
+                marginStart: 20,
+                marginTop: 35,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity
+                style={{ width: 50 }}
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="arrow-back-circle" size={45} color="white" />
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+         </View>
 
-            setpayMethod(2)
-          }}
-          style={{height:57,marginHorizontal:20,marginBottom:15,borderWidth:payMethod===2?1:0,borderRadius:10,borderColor:'green'}}>
-             <View style={styles.pay}>
-                <Text style={styles.textPay}>Chuyển khoản</Text>
-                <FontAwesome name="bank" size={24} color="blue" />
-             </View>
-          </TouchableOpacity>
-      </View>
-    </View>
-    <View style={{position:"absolute",bottom:30,width:widthScreen-15,height:75,flexDirection:'row',justifyContent:'space-between'}}>
-          <View style={{flex:1.5,justifyContent:'center',alignItems:'center'}}> 
-              <Text style={{color:'#ff4500',fontSize:20,textAlign:'center',fontWeight:'bold'}}>{TotalPrice.toLocaleString()} vnd</Text>
-          </View>
-          <TouchableOpacity onPress={()=>{
-            if(Chair_select.length===0){
-              Alert.alert('Vui lòng chọn ghế')
-             }else{
-              payMethod===1?setcomfirmBooking(true):setcomfirmBookingByPay(true)
-            }
-            }} style={{flex:1}}>
-          <View style={{flex:1,backgroundColor:'#94d0ee',borderRadius:40,justifyContent:'center'}}>
-                <Text style={{color:'white',fontSize:20,textAlign:'center',fontWeight:'bold'}}>Đặt Vé</Text>
-          </View>
-          </TouchableOpacity>
+         {/* body */}
+         <View style={{flex:4}}>
+               {/* Danh sách ghế ngồi */}
+               <View style={{flex:1.25,backgroundColor:'white'}}>
+                       <Text style={{fontSize: 18, textAlign: "center",marginTop:10}}>Vui lòng chọn ghế</Text>
+                       <FlatList
+                        data={ListGhe}
+                        renderItem={({ item }) => <ItemGhe item={item} />}
+                        numColumns={10}
+                        keyExtractor={(item, index) => index.toString()}
+                      />
+               </View>
 
+               <View style={{flex:1}}>
+                       
+               </View>
+
+               
+         </View>
+
+          {/* footer */}
+         <View style={{flex:1,backgroundColor:'black'}}>
+
+         </View>
          
-    </View>
-          
+        {/* <View style={{flex:1}}>
+          <ImageBackground
+            style={{ height: 120, width: "100%" }}
+            source={require("../img/image.png")}
+          >
+            <View
+              style={{
+                marginStart: 20,
+                marginTop: 45,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity
+                style={{ width: 50 }}
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="arrow-back-circle" size={45} color="white" />
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+          <Text style={{ fontSize: 18, textAlign: "center", marginVertical: 10 }}>
+            Vui lòng chọn ghế{" "}
+          </Text>
+          <FlatList
+            data={ListGhe}
+            renderItem={({ item }) => <ItemGhe item={item} />}
+            numColumns={10}
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <Text style={{ margin: 10, fontSize: 17, color: 'gray' }}>Trạng thái ghế</Text>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ width:widthScreen/10*3, marginStart: 10 }}>
+              <View style={{ flexDirection: "row", alignItems: 'center', margin: 5 }}>
+                <AntDesign name="QQ" size={40} color='#DDDDDD' />
+                <Text>Ghế trống</Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: 'center', margin: 5 }}>
+                <AntDesign name="QQ" size={40} color="#94d0ee" />
+                <Text>Đang chọn</Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: 'center', margin: 5 }}>
+                <AntDesign name="QQ" size={40} color="red" />
+                <Text>Đã đặt</Text>
+              </View>
+            </View>
+            <View style={{flex:1,width:widthScreen/10*7}}>
+            <FlatList
+              style={{flex:1,backgroundColor:'#EEEEEE',borderRadius:5}}
+              data={Chair_select}
+              numColumns={3}
+              renderItem={({item})=>(<ImageBackground style={{width:widthScreen/10*2,height:40,margin:6,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}
+                                    source={require('../img/Ticket.png')}
+              >
+                <Text style={{color:'black',fontSize:16,textAlign:'center',fontWeight:'bold'}}>{item}</Text>
+                <Image source={require('../img/Ma.png')}
+                      style={{width:10,height:40}}
+                />
+              </ImageBackground>)}
+              />
+            </View>
+            
+          </View>
+          <Text style={{ margin: 10, fontSize: 17, color: 'gray' }}>Phương thức thanh toán</Text>
+          <View style={{flex:2}}>
+              
+              <TouchableOpacity 
+              onPress={()=>{setpayMethod(1)}}
+              style={{height:57,marginHorizontal:20,marginBottom:15,borderWidth:payMethod===1?1:0,borderRadius:10,borderColor:'green'}}>
+                <View  style={styles.pay}>
+                    <Text style={styles.textPay}>Thanh toán tại quầy</Text>
+                    <FontAwesome5 name="money-bill" size={24} color="green" />
+                </View>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+              onPress={()=>{
+
+                setpayMethod(2)
+              }}
+              style={{height:57,marginHorizontal:20,marginBottom:15,borderWidth:payMethod===2?1:0,borderRadius:10,borderColor:'green'}}>
+                <View style={styles.pay}>
+                    <Text style={styles.textPay}>Chuyển khoản</Text>
+                    <FontAwesome name="bank" size={24} color="blue" />
+                </View>
+              </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={{position:"absolute",bottom:30,width:widthScreen-15,height:75,flexDirection:'row',justifyContent:'space-between'}}>
+              <View style={{flex:1.5,justifyContent:'center',alignItems:'center'}}> 
+                  <Text style={{color:'#ff4500',fontSize:20,textAlign:'center',fontWeight:'bold'}}>{TotalPrice.toLocaleString()} vnd</Text>
+              </View>
+              <TouchableOpacity onPress={()=>{
+                if(Chair_select.length===0){
+                  Alert.alert('Vui lòng chọn ghế')
+                }else{
+                  payMethod===1?setcomfirmBooking(true):setcomfirmBookingByPay(true)
+                }
+                }} style={{flex:1}}>
+              <View style={{flex:1,backgroundColor:'#94d0ee',borderRadius:40,justifyContent:'center'}}>
+                    <Text style={{color:'white',fontSize:20,textAlign:'center',fontWeight:'bold'}}>Đặt Vé</Text>
+              </View>
+              </TouchableOpacity>
+
+            
+        </View>
+           */}
           {CheckSuccess&&<AntDesign style={{position:"absolute",top:(heightScreen-70)/2,start:(widthScreen-70)/2}} name="checkcircleo" size={70} color="green" />}
     
          {/* comfirm oder Ticket by pay at the counter */}
